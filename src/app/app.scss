@@ -14,3 +14,21 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+
+@font-face {
+	font-family: 'Login-Heading';
+	src: url('../assets/fonts/SinkinSans-100Thin.otf'); /* IE9 Compat Modes */
+}
+@font-face {
+	font-family: 'Login-Heading2';
+	src: url('../assets/fonts/SinkinSans-200XLight.otf'); /* IE9 Compat Modes */
+}
+@font-face {
+	font-family: 'Login-input';
+	src: url('../assets/fonts/SinkinSans-300Light.otf'); /* IE9 Compat Modes */
+}
+@font-face {
+	font-family: 'Login-submit';
+	src: url('../assets/fonts/SinkinSans-500Medium.otf'); /* IE9 Compat Modes */
+}
