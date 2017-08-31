@@ -1,84 +1,93 @@
 page-login {
-	background: url("../assets/bg/0000.png") no-repeat;
+	background: url("../assets/bg/0000.png") no-repeat #ef966a;
 	background-size: 100% auto;
 }
 page-login ion-content {
 	background: transparent !important;
 }
-page-login .loginContainer {
+.userloginForm .loginContainer {
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	width: 100%;
-	height: 510px;
+	height: 430px;
 	transform: translate(-50%, -50%);
 }
 
-page-login h1{
+.userloginForm h1{
 	font-size: 3.6rem;
 	color: #fff;
 	text-align: center;
 	font-family: Login-Heading2;
 }
-page-login h2{
+.userloginForm h2{
 	font-size: 2.6rem;
 	text-align: center;
 }
 
-page-login ion-item, page-login ion-item .item-inner{
+.userloginForm ion-item, .userloginForm ion-item .item-inner{
 	background: transparent !important;
 	border: 0 !important;
 }
-page-login ion-list {
+.userloginForm ion-list {
 	padding-bottom: 0 !important;
 	margin-bottom: 0 !important;
 }
-page-login ion-item {
+.userloginForm ion-item {
 	padding: 0px !important;
 	color: #fff !important;
 	font-family: Login-input;
 	text-shadow: 0px 0px #fff;
 }
-page-login ion-item .item-inner{
+.userloginForm ion-item .item-inner{
 	padding: 0 !important;
 }
-page-login ion-item ion-input {
+.userloginForm ion-item ion-input {
 	background: rgba(255, 255, 255, 0.16);
 }
 
-page-login ion-item ion-label, page-login ion-item ion-input input {
+.userloginForm ion-item ion-label, .userloginForm ion-item ion-input input {
 	width: 100% !important;
 }
-page-login ion-item ion-label ion-icon {
+.userloginForm ion-item ion-label ion-icon {
 	position: relative;
 	top: 3px;
 	padding-left: 12px;
 	padding-right: 16px;
 	font-size: 1.6em;
 }
-page-login ion-item ion-input input {
+.userloginForm ion-item ion-input input {
 	padding-left: 7px !important;
 	padding-right: 7px !important;
 }
 
-page-login .bottomContainer {
+.userloginForm .bottomContainer {
 	margin-top: 16px;
 	font-family: Login-submit;
 }
-page-login .bottomContainer button {
+.userloginForm .bottomContainer button {
 	height: 2.3em;
+	line-height: 2.3em;
 	background: #ffbf25;
 	font-weight: bold;
 }
-page-login .userLink {
+.userloginForm .bottomContainer button.activated {
+	background: rgba(255, 191, 37, 0.7);
+}
+.userLink {
 	text-align: center;
 	color: #fff;
-	margin-top: 34px;
+	margin-top: 25px;
 	font-size: 13px;
 }
-
+.userLink:nth-child(2) {
+	margin-top: 43px;
+}
 
 .smallHeading {
 	font-size: 1.7rem;
 	color: #ffbf25;
+}
+.userloginForm .scroll-content {
+	overflow: hidden;
 }

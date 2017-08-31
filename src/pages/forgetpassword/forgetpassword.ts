@@ -1,45 +1,21 @@
 import { Component } from '@angular/core';
 import { ViewController, NavController, NavParams } from 'ionic-angular';
+
+import { LoginPage } from '../../pages/login/login';
 import { SignupPage } from '../../pages/signup/signup';
-import { ForgetpasswordPage } from '../../pages/forgetpassword/forgetpassword';
-
-
-import { tokenNotExpired } from 'angular2-jwt';
-
-import { ServerauthProvider } from '../../providers/serverauth/serverauth';
-import { ServerchatProvider } from '../../providers/serverchat/serverchat';
-
 
 @Component({
-	selector: 'page-login',
-	templateUrl: 'login.html',
+	selector: 'page-forgetpassword',
+	templateUrl: 'forgetpassword.html',
 })
-export class LoginPage {
+export class ForgetpasswordPage {
 
-	public obj: { name: string, password: string} = { name: '', password: ''};
-
-	constructor(
-		public navCtrl: NavController,
-		public navParams: NavParams,
-		private viewCtrl: ViewController,
-		private auth: ServerauthProvider,
-		private chat: ServerchatProvider) {
-
-		if (tokenNotExpired()) {
-			this.chat.socketAuth();
-		}
+	constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController) {
+		
 	}
 
 	ionViewDidLoad() {
-		console.log('ionViewDidLoad LoginPage');
-	}
-
-	login() {
-		this.auth.getToken(this.obj).then((status) => {
-			if(status) {
-				this.chat.socketAuth();
-			}
-		});
+		console.log('ionViewDidLoad ForgetpasswordPage');
 	}
 
 	gotoPageUserForm (pageName) {
@@ -73,4 +49,3 @@ export class LoginPage {
 	}
 
 }
-

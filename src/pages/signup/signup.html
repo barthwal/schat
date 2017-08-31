@@ -1,10 +1,11 @@
 <!-- <ion-header>
 
-  <ion-navbar>
-    <ion-title>login</ion-title>
-  </ion-navbar>
+	<ion-navbar>
+		<ion-title>signup</ion-title>
+	</ion-navbar>
 
 </ion-header> -->
+
 <ion-content class="userloginForm" >
 	<div class="loginContainer" ion-fixed>
 		<h1><ion-icon name="chatbubbles" ></ion-icon> sChat <span class="smallHeading">beta 1.0</span></h1>
@@ -12,24 +13,28 @@
 
 
 
-
 		<ion-list padding>
 			<ion-item>
 				<ion-label floating><ion-icon name="disc" ></ion-icon> Username</ion-label>
-				<ion-input type="text" [(ngModel)]="obj.name" ></ion-input>
+				<ion-input type="text"></ion-input>
 			</ion-item>
 
 			<ion-item>
 				<ion-label floating><ion-icon name="create" ></ion-icon> Password</ion-label>
-				<ion-input type="password" [(ngModel)]="obj.password" ></ion-input>
+				<ion-input type="password"></ion-input>
+			</ion-item>
+
+			<ion-item>
+				<ion-label floating><ion-icon name="create" ></ion-icon> Mobile number</ion-label>
+				<ion-input type="number"></ion-input>
 			</ion-item>
 		</ion-list>
 
 		<div class="bottomContainer" padding>
-			<button ion-button full (click)="login()" >LOGIN</button>
-			<div class="userLink" (click)="gotoPageUserForm('forget')">Forget password?</div>
-			<div class="userLink" (click)="gotoPageUserForm('signup')">Create new user?</div>
+			<button ion-button full>Sign up</button>
+			<div class="userLink" (click)="gotoPageUserForm('login')">Already have account?</div>
 		</div>
 	</div>
 
 </ion-content>
+
