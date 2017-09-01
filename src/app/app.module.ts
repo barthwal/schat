@@ -4,12 +4,14 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpModule } from '@angular/http';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { ForgetpasswordPage } from '../pages/forgetpassword/forgetpassword';
+import { HomePage } from '../pages/home/home';
+import { ChatareaPage } from '../pages/chatarea/chatarea';
 
 
 import { ServerauthProvider } from '../providers/serverauth/serverauth';
@@ -23,14 +25,15 @@ import { ServerchatProvider } from '../providers/serverchat/serverchat';
     HomePage,
     LoginPage,
     SignupPage,
-    ForgetpasswordPage
-
+    ForgetpasswordPage,
+    ChatareaPage
     
   ],
   imports: [
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -38,7 +41,9 @@ import { ServerchatProvider } from '../providers/serverchat/serverchat';
     HomePage,
     LoginPage,
     SignupPage,
-    ForgetpasswordPage
+    ForgetpasswordPage,
+    ChatareaPage
+    
   ],
   providers: [
     StatusBar,

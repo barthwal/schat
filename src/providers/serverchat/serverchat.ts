@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import * as Rx from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
+import { Storage } from '@ionic/storage';
 
 import { User } from '../../models/user';
 import { Message } from '../../models/message';
@@ -12,6 +13,7 @@ declare var io;
 
 @Injectable()
 export class ServerchatProvider {
+	firstTimeload: boolean = false;
 	socket: any;
 	me: User;
 	usersStream: Rx.Observable<User[]> = new Rx.Observable<User[]>();
@@ -25,7 +27,7 @@ export class ServerchatProvider {
 	friends: Rx.Subject<User[]> = new Rx.Subject<User[]>();
 	currentFriend: Rx.Subject<User> = new Rx.BehaviorSubject<User>(null);
 	
-	constructor(public http: Http, public e: Events) {
+	constructor(public http: Http, public e: Events, private storage: Storage,) {
 		console.log('Hello ServerchatProvider Provider');
 	}
 
@@ -34,6 +36,8 @@ export class ServerchatProvider {
 		this.usersStream = Rx.Observable.fromEvent(this.socket, 'onlineUsers');
 
 		this.usersStream.subscribe((users) => {
+			console.log('usersStream: ', users);
+
 			this.usersResponseStream = Rx.Observable.create((observer) => {
 				observer.next(users);
 			});
@@ -65,6 +69,9 @@ export class ServerchatProvider {
 		});
 	}
 
+	public setCurrentFriend(user: User): void {
+		this.currentFriend.next(new User(user));
+	}
 
 
 	private initLoggedInUser(): void {
@@ -79,14 +86,43 @@ export class ServerchatProvider {
 	}
 
 	public socketAuth(): void {
-		let token = localStorage.getItem('id_token');
+		
+		console.log('socket auth', !this.firstTimeload);
 
-		this.socket = io.connect("http://localhost:3357");
-		this.socket.on("connect", () => {
-			this.socket.emit('authenticate', {token: token});
-			this.initUsersStreams();
-			this.initMessagesStreams();
-			this.initLoggedInUser();
+		
+
+		this.storage.get('id_token').then((val) => {
+			let token = val;
+
+			console.log('connect with localhost', val);
+			this.socket = io.connect("http://localhost:3357");
+			if(!this.firstTimeload) {
+				this.firstTimeload = true;
+				this.socket.on("connect", () => {
+					this.socket.emit('authenticate', {token: token});
+					this.initUsersStreams();
+					this.initMessagesStreams();
+					this.initLoggedInUser();
+				});
+			}
+		});
+	}
+
+	public logout(): void {
+		console.log('server logout plz');
+		this.storage.get('id_token').then((val) => {
+			let token = val;
+			
+			console.log('logoutUser');
+			this.socket.emit('logoutUser', {token: token}, (resp) => {
+				console.log('server back resp: ', resp);
+
+				if (resp.status) {
+
+				} else {
+					
+				}
+			});
 		});
 	}
 

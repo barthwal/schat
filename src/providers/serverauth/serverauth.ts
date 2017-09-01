@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
+import { ServerchatProvider } from '../serverchat/serverchat';
 
 
 @Injectable()
 export class ServerauthProvider {
 	jwtHelper: JwtHelper;
 
-	constructor(public http: Http) {
+	constructor(public http: Http, private storage: Storage, private chat: ServerchatProvider) {
 		this.jwtHelper = new JwtHelper();
 	}
 
@@ -21,20 +23,18 @@ export class ServerauthProvider {
 		});
 	}
 
-	private saveToken(data: any): boolean {
+	private saveToken(data: any): any {
 		if(data.status) {
 			let decodedToken = this.jwtHelper.decodeToken(data.jwt);
-			localStorage.setItem('profile', JSON.stringify(decodedToken));
-			localStorage.setItem('id_token', data.jwt);
-			return true;
+			return {res: true, 'profile': JSON.stringify(decodedToken), 'token': data.jwt};
 		} else {
-			return false;
+			return {res: false, 'profile': null, 'token': null};
 		}
 	}
 
 	public logout(): void {
-		localStorage.removeItem('profile');
-		localStorage.removeItem('id_token');
+		this.storage.clear();
+		this.chat.logout();
 	}
 
 }

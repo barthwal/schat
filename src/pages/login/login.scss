@@ -39,6 +39,9 @@ page-login ion-content {
 	font-family: Login-input;
 	text-shadow: 0px 0px #fff;
 }
+.userloginForm ion-item *{
+	color: #fff !important;
+}
 .userloginForm ion-item .item-inner{
 	padding: 0 !important;
 }
