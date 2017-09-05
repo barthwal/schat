@@ -28,7 +28,7 @@ export class ServerchatProvider {
 	currentFriend: Rx.Subject<User> = new Rx.BehaviorSubject<User>(null);
 	
 	constructor(public http: Http, public e: Events, private storage: Storage,) {
-		console.log('Hello ServerchatProvider Provider');
+		//console.log('Hello ServerchatProvider Provider');
 	}
 
 
@@ -52,6 +52,7 @@ export class ServerchatProvider {
 		this.messagesStream = Rx.Observable.fromEvent(this.socket, 'onMessage');
 
 		this.messagesStream.subscribe((message) => {
+			console.log('this is new message: ', message);
 			this.messagesResponseStream = Rx.Observable.create((observer) => {
 				observer.next(message);
 			});
@@ -73,15 +74,51 @@ export class ServerchatProvider {
 		this.currentFriend.next(new User(user));
 	}
 
+	public getCurrentMessages(user: User): any {
+		let msgs: Message[] = [];
+		return this.messages.map((message: Message) => {
+
+			if ( (message.recipient.id === user.id && message.sender.id === this.me.id) || (message.recipient.id === this.me.id && message.sender.id === user.id)) {
+
+				msgs.push(new Message(message));
+			}
+			return msgs;
+		});
+	}
+
+	public sendMessage(msg: Message): any {
+		return new Promise((resolve, reject) => {
+			this.socket.emit('sendMessage', msg, (resp) => {
+				if (resp.status) {
+					this.addOwnMessage(msg);
+					resolve();
+				} else {
+					reject();
+				}
+			});
+		});
+	}
+
+	private addOwnMessage(msg: Message): void {
+		this.createMessage.next(msg);
+	}
+
 
 	private initLoggedInUser(): void {
-		let profileData = JSON.parse(localStorage.getItem('profile'));
-		if(!profileData) { return; }
+		
 
-		this.me = new User({
-			id: profileData.id,
-			name: profileData.name,
-			avatar: profileData.avatar
+		this.storage.get('profile').then((val) => {
+			if(typeof val != "object")
+				val = JSON.parse(val);
+
+			let profileData = val;
+			if(!profileData) { return; }
+
+			this.me = new User({
+				id: profileData.id,
+				name: profileData.name,
+				avatar: profileData.avatar
+			});
 		});
 	}
 
@@ -94,11 +131,11 @@ export class ServerchatProvider {
 		this.storage.get('id_token').then((val) => {
 			let token = val;
 
-			console.log('connect with localhost', val);
 			this.socket = io.connect("http://localhost:3357");
 			if(!this.firstTimeload) {
 				this.firstTimeload = true;
 				this.socket.on("connect", () => {
+					console.log('connected success');
 					this.socket.emit('authenticate', {token: token});
 					this.initUsersStreams();
 					this.initMessagesStreams();
@@ -109,16 +146,20 @@ export class ServerchatProvider {
 	}
 
 	public logout(): void {
-		console.log('server logout plz');
 		this.storage.get('id_token').then((val) => {
 			let token = val;
-			
-			console.log('logoutUser');
+
+			console.log('logout token: ', token);
+
 			this.socket.emit('logoutUser', {token: token}, (resp) => {
 				console.log('server back resp: ', resp);
 
 				if (resp.status) {
+					this.firstTimeload = false;
+					this.storage.clear();
+					//this.socket.disconnect();
 
+				
 				} else {
 					
 				}

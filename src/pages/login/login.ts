@@ -6,10 +6,7 @@ import { ForgetpasswordPage } from '../../pages/forgetpassword/forgetpassword';
 import { Storage } from '@ionic/storage';
 
 
-import { tokenNotExpired } from 'angular2-jwt';
-
 import { ServerauthProvider } from '../../providers/serverauth/serverauth';
-import { ServerchatProvider } from '../../providers/serverchat/serverchat';
 
 
 @Component({
@@ -25,33 +22,22 @@ export class LoginPage {
 		public navParams: NavParams,
 		private viewCtrl: ViewController,
 		private storage: Storage,
-		private auth: ServerauthProvider,
-		private chat: ServerchatProvider) {
+		private auth: ServerauthProvider) {
 
-		/*if (tokenNotExpired()) {
-			this.chat.socketAuth();
-		}*/
 	}
 
 	ionViewDidLoad() {
-		console.log('ionViewDidLoad LoginPage');
+		//console.log('ionViewDidLoad LoginPage');
 	}
 
 	login() {
 		this.auth.getToken(this.obj).then((status) => {
 			if(status.res) {
-
+				
 				this.storage.set("profile", status.profile);
 				this.storage.set("id_token", status.token);
 
-				this.chat.socketAuth();
-
-				this.navCtrl.push(HomePage).then(() => {
-					// first we find the index of the current view controller:
-					const index = this.viewCtrl.index;
-					// then we remove it from the navigation stack
-					this.navCtrl.remove(index);
-				});
+				this.navCtrl.setRoot(HomePage);
 			}
 		});
 	}

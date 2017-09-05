@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
-import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
+import { JwtHelper } from 'angular2-jwt';
 import { ServerchatProvider } from '../serverchat/serverchat';
 
 
@@ -10,7 +9,7 @@ import { ServerchatProvider } from '../serverchat/serverchat';
 export class ServerauthProvider {
 	jwtHelper: JwtHelper;
 
-	constructor(public http: Http, private storage: Storage, private chat: ServerchatProvider) {
+	constructor(public http: Http, private chat: ServerchatProvider) {
 		this.jwtHelper = new JwtHelper();
 	}
 
@@ -33,7 +32,6 @@ export class ServerauthProvider {
 	}
 
 	public logout(): void {
-		this.storage.clear();
 		this.chat.logout();
 	}
 

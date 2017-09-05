@@ -17,8 +17,30 @@
 		</div>
 	</div>
 </ion-content>
-<div class="msg">
-	<input type="text" placeholder="Message ..." [(ngModel)]="msg" (keydown.enter)="sendMessage()">
+<ion-footer>
+	<ion-toolbar>
+		<!-- <ion-title>Footer</ion-title> -->
+		<div class="msg">
+			<input type="text" placeholder="Message ..." [(ngModel)]="msg" (keydown.enter)="sendMessage()">
+			
+			<button small (click)="sendMessage()" [disabled]="msg === ''"> Send </button>
+		</div>
+	</ion-toolbar>
 	
-	<button small (click)="sendMessage()" [disabled]="msg === ''"> Send </button>
-</div>
+</ion-footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -20,6 +20,7 @@ export class HomePage {
 	friends: Rx.Subject<User[]> = new Rx.Subject<User[]>();
 
 	constructor(public navCtrl: NavController, public chat: ServerchatProvider, private viewCtrl: ViewController, private auth: ServerauthProvider) {
+		
 		this.chat.socketAuth();
 
 		//this.friends = chat.friends;
@@ -28,6 +29,8 @@ export class HomePage {
 	}
 
 	ionViewDidLoad() {
+		//console.log('ionViewDidLoad HomePage');
+
 		this.friends = this.chat.friends;
 	}
 
